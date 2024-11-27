@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch",
+      "type": "lldb",
+      "request": "launch",
+      "cargo": {
+        "args": ["build"]
+      },
+      "program": "${workspaceFolder}/target/debug/networth_http",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env",
+      "stopOnEntry": false
+    }
+  ]
+}
