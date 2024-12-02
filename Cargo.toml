@@ -2,3 +2,37 @@
 name = "networth_http"
 version = "0.1.0"
 edition = "2018"
+
+[dependencies]
+axum = { version = "0.7.9", features = ["multipart"] }
+dotenvy = "0.15.7"
+serde = { version = "1.0.215", features = ["derive"] }
+validator = { version = "0.19.0", features = ["derive"] }
+sea-orm = { version = "1.1.1", features = ["sqlx-sqlite", "sqlx-postgres", "runtime-tokio-rustls"] }
+tokio = { version = "1.41.1", features = ["macros", "rt-multi-thread"] }
+uuid = { version = "1.11.0", features = ["v4"] }
+tower-http = { version = "0.6.2", features = ["cors"] }
+tracing = "0.1.41"
+networth_db = { path = "../NetworthDB" }
+
+[dev-dependencies]
+cargo-watch = "7.8.0"
+cargo-commander = "2.0.15"
+
+[package.metadata.commands]
+# seaORM
+# Entity Generation
+orm-entity = "sea-orm-cli generate entity -o src/models/entity"
+orm-reapply = """
+    sea-orm-cli migrate down -d src/models/migrations && \
+    sea-orm-cli migrate up -d src/models/migrations
+"""
+
+# Database Migrations
+migrate = "sea-orm-cli migrate -d src/models/migrations"
+migrate-up = "sea-orm-cli migrate up -d src/models/migrations"
+migrate-down = "sea-orm-cli migrate down -d src/models/migrations"
+migrate-status = "sea-orm-cli migrate status -d src/models/migrations"
+migrate-fresh = "sea-orm-cli migrate fresh -d src/models/migrations"
+migrate-reset = "sea-orm-cli migrate reset -d src/models/migrations"
+migrate-init = "sea-orm-cli migrate init -d src/models/migrations"

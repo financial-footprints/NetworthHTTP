@@ -1,0 +1,25 @@
+[package]
+name = "networth_http_migrations"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "networth_http_migrations"
+path = "lib.rs"
+
+[[bin]]
+name = "networth_http_migrations"
+path = "main.rs"
+
+[dependencies]
+async-std = { version = "1", features = ["attributes", "tokio1"] }
+networth_db = { path = "../../../../NetworthDB" }
+
+[dependencies.sea-orm-migration]
+version = "1.1.0"
+features = [
+  "runtime-tokio-rustls",
+  "sqlx-postgres",
+  "sqlx-sqlite"
+]

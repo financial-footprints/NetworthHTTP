@@ -1,8 +1,13 @@
 ## Repository specific
 .env
-data/*
 .local
 
 # Rust
-/target
+**/target
 **/*.rs.bk
+
+# Documents
+.~lock*
+
+# Database
+*.sqlite
