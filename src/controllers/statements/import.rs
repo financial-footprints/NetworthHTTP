@@ -4,7 +4,7 @@ use axum::{
     response::IntoResponse,
 };
 
-pub(super) async fn import_from_file(
+pub(super) async fn statement_import(
     State(config): State<crate::config::types::Config>,
     mut multipart: Multipart,
 ) -> impl IntoResponse {

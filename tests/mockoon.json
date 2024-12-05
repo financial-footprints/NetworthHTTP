@@ -13,7 +13,7 @@
       "type": "http",
       "documentation": "",
       "method": "post",
-      "endpoint": "api/v1/statements/upload",
+      "endpoint": "api/v1/statements/import",
       "responses": [
         {
           "uuid": "41f526d5-0c1b-436c-a6fb-3e5fc1e72ba8",
