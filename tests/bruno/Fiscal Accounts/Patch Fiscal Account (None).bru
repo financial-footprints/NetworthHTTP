@@ -1,0 +1,25 @@
+meta {
+  name: Patch Fiscal Account (None)
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/{{accountId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+vars:pre-request {
+  accountId: {{REQ_ACCOUNT_ID}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.type: eq CheckingAccount
+  res.body.account_number: eq "123456789"
+}

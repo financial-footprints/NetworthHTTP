@@ -1,0 +1,21 @@
+meta {
+  name: Delete Fiscal Account (Non-existing Item)
+  type: http
+  seq: 11
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/{{accountId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  accountId: 
+  
+  00000000-0000-0000-0000-000000000000
+}
+
+assert {
+  res.status: eq 404
+}
