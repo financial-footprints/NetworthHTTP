@@ -2445,6 +2445,7 @@ dependencies = [
  "axum",
  "cargo-commander",
  "cargo-watch",
+ "chrono",
  "dotenvy",
  "networth_db",
  "sea-orm",

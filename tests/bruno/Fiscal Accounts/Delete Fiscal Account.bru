@@ -1,0 +1,19 @@
+meta {
+  name: Delete Fiscal Account
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/{{accountId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  accountId: {{REQ_ACCOUNT_ID}}
+}
+
+assert {
+  res.status: eq 204
+}
