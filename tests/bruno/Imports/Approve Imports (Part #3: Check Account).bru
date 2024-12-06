@@ -1,0 +1,34 @@
+meta {
+  name: Approve Imports (Part #3: Check Account)
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/{{accountId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  accountId: {{TEST_ACCOUNT_ID}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{TEST_ACCOUNT_ID}}
+  res.body.account_number: eq "import_test_number"
+  res.body.max_sequence_number: eq 2
+  res.body.type: eq "SavingsAccount"
+}
+
+tests {
+  test("response should contain correct date format", () => {
+    const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
+    expect(res.body.updated_at).to.match(iso8601Regex);
+  });
+}
+
+docs {
+  Check if the import was successful and the account is updated.
+}

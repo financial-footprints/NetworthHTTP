@@ -1,0 +1,28 @@
+meta {
+  name: Patch Imports (Invalid ID)
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{BASEURL}}/api/v1/import/{{importId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+vars:pre-request {
+  importId: 00000000-0000-0000-0000-000000000000
+}
+
+assert {
+  res.status: eq 404
+  res.body: eq error.imports.patch_import.not_found
+}
+
+docs {
+  Tests behavior when updating an import with empty JSON payload.
+}

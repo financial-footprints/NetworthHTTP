@@ -1,0 +1,25 @@
+meta {
+  name: Approve Imports (Part #2: Approval)
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{BASEURL}}/api/v1/import/{{TEST_IMPORT_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "account_id": "{{TEST_ACCOUNT_ID}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Approves an import to merge it into a fiscal account.
+}

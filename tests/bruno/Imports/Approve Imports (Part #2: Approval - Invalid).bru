@@ -1,0 +1,25 @@
+meta {
+  name: Approve Imports (Part #2: Approval - Invalid)
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{BASEURL}}/api/v1/import/{{TEST_IMPORT_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {"account_id": "00000000-0000-0000-0000-000000000000"}
+}
+
+assert {
+  res.status: eq 500
+  res.body: eq error.import.could_not_approve
+}
+
+docs {
+  Attempts to approve an import with an invalid account ID.
+  Expects a 500 status code and an error message indicating the approval could not be completed.
+}

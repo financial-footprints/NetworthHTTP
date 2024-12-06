@@ -1,12 +1,14 @@
 use axum::{
     extract::{Multipart, State},
     http::StatusCode,
+    Json,
 };
+use uuid::Uuid;
 
-pub(super) async fn statement_import(
+pub(super) async fn create_import(
     State(config): State<crate::config::types::Config>,
     mut multipart: Multipart,
-) -> Result<(StatusCode, ()), (StatusCode, String)> {
+) -> Result<(StatusCode, Json<Uuid>), (StatusCode, String)> {
     let mut file_data = None;
     let mut file_secret = Some(String::new());
 
@@ -67,28 +69,28 @@ pub(super) async fn statement_import(
         .map_err(|error| {
             let now = chrono::Utc::now();
             tracing::error!(
-                "error.statements.import.could_not_parse at {}, error: {}",
+                "error.import.could_not_parse at {}, error: {}",
                 now,
                 error
             );
             (
                 StatusCode::BAD_REQUEST,
-                "error.statements.import.could_not_parse".to_string(),
+                "error.import.could_not_parse".to_string(),
             )
         })?;
 
     match networth_db::models::manage::imports::create_import(&config.db, &statement).await {
-        Ok(_) => Ok((StatusCode::CREATED, ())),
+        Ok(id) => Ok((StatusCode::CREATED, Json(id))),
         Err(error) => {
             let now = chrono::Utc::now();
             tracing::error!(
-                "error.statements.import.could_not_save at {}, error: {}",
+                "error.import.could_not_save at {}, error: {}",
                 now,
                 error
             );
             Err((
                 StatusCode::INTERNAL_SERVER_ERROR,
-                "error.statements.import.could_not_save".to_string(),
+                "error.import.could_not_save".to_string(),
             ))
         }
     }

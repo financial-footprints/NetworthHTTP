@@ -1,5 +1,5 @@
 mod fiscal_accounts;
-mod statements;
+mod imports;
 use axum::Router;
 
 pub(super) fn routes(config: crate::config::types::Config) -> Router {
@@ -7,6 +7,6 @@ pub(super) fn routes(config: crate::config::types::Config) -> Router {
         "/api/v1",
         Router::new()
             .nest("/fiscal_accounts", fiscal_accounts::routes(config.clone()))
-            .nest("/statements", statements::routes(config.clone())),
+            .nest("/import", imports::routes(config.clone())),
     )
 }

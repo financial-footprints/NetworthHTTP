@@ -16,16 +16,19 @@ assert {
 
 tests {
   test("response should be a valid array", () => {
-    const firstAccount = res.body[0];
-  
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    expect(firstAccount).to.have.property('id').that.matches(uuidRegex);
-  
+    expect(res.body).to.be.an('array');
+
+    const accountId = bru.getEnvVar("TEST_ACCOUNT_ID");
+    const accountRecord = res.body.find(record => record.id === accountId);
+    expect(accountRecord).to.not.be.undefined;
+
     const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
-    expect(firstAccount).to.have.property('updated_at').that.matches(iso8601Regex);
-  
-    expect(firstAccount).to.have.property('auto_updated_at', null);
-    expect(firstAccount).to.have.property('account_number', '123456789');
-    expect(firstAccount).to.have.property('type', 'CheckingAccount');
+    expect(accountRecord).to.have.property('updated_at').that.matches(iso8601Regex);
+    expect(accountRecord).to.have.property('account_number', '123456789');
+    expect(accountRecord).to.have.property('type', 'CheckingAccount');
   });
+}
+
+docs {
+  Retrieves a list of all fiscal accounts.
 }

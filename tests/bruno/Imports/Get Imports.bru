@@ -1,0 +1,32 @@
+meta {
+  name: Get Imports
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASEURL}}/api/v1/import
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("response should be a valid array", () => {
+    expect(res.body).to.be.an('array');
+  
+    const importId = bru.getEnvVar("TEST_IMPORT_ID");
+    const importRecord = res.body.find(record => record.id === importId);
+    console.log(importRecord)
+    expect(importRecord).to.not.be.undefined;
+    expect(importRecord).to.have.property('account_number', '12345678910');
+    expect(importRecord).to.have.property('source_file_date', '2024-03-31T00:00:00');
+  });
+}
+
+docs {
+  Retrieves a list of all fiscal accounts.
+}

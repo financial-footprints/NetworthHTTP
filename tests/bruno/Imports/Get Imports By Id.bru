@@ -1,0 +1,32 @@
+meta {
+  name: Get Import By ID
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASEURL}}/api/v1/import/{{importId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{TEST_IMPORT_ID}}
+}
+
+tests {
+  test("response should contain correct import details", () => {
+    expect(res.body).to.have.property('account_number', '12345678910');
+    expect(res.body).to.have.property('source_file_date', '2024-03-31T00:00:00');
+  });
+}
+
+docs {
+  Retrieves a specific import by its UUID.
+  Expects a 200 status code and import details on success.
+}
