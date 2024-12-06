@@ -3,6 +3,7 @@ use axum::{
     http::StatusCode,
 };
 use networth_db::models::entities::{accounts, sea_orm_active_enums::AccountType};
+use sea_orm::DbErr;
 use serde::Deserialize;
 use uuid::Uuid;
 
@@ -25,16 +26,23 @@ pub async fn patch_account(
     )
     .await
     .map_err(|error| {
-        let now = chrono::Utc::now();
-        tracing::error!(
-            "error.fiscal_accounts.patch_account.could_not_update at {}, error: {}",
-            now,
-            error
-        );
-        (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            "error.fiscal_accounts.patch_account.could_not_update".to_string(),
-        )
+        if matches!(error, DbErr::RecordNotFound(_)) {
+            return (
+                StatusCode::NOT_FOUND,
+                "error.fiscal_accounts.patch_account.not_found".to_string(),
+            );
+        } else {
+            let now = chrono::Utc::now();
+            tracing::error!(
+                "error.fiscal_accounts.patch_account.could_not_update at {}, error: {}",
+                now,
+                error
+            );
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "error.fiscal_accounts.patch_account.could_not_update".to_string(),
+            )
+        }
     })?;
 
     Ok(Json(account))

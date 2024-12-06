@@ -1,60 +1,14 @@
 {
   "uuid": "ae54ead4-6dd6-4b63-acaf-22bf8a180f20",
-  "lastMigration": 33,
+  "lastMigration": 1,
   "name": "NetworthHTTP",
   "endpointPrefix": "",
   "latency": 0,
   "port": 8000,
   "hostname": "127.0.0.1",
   "folders": [],
-  "routes": [
-    {
-      "uuid": "f76be849-183d-4789-843c-30a0553824bc",
-      "type": "http",
-      "documentation": "",
-      "method": "post",
-      "endpoint": "api/v1/statements/import",
-      "responses": [
-        {
-          "uuid": "41f526d5-0c1b-436c-a6fb-3e5fc1e72ba8",
-          "body": "",
-          "latency": 0,
-          "statusCode": 201,
-          "label": "",
-          "headers": [
-            {
-              "key": "connection",
-              "value": "close"
-            },
-            {
-              "key": "date",
-              "value": "Sun, 01 Dec 2024 23:56:26 GMT"
-            }
-          ],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false,
-          "crudKey": "id",
-          "callbacks": []
-        }
-      ],
-      "responseMode": null,
-      "streamingMode": null,
-      "streamingInterval": 0
-    }
-  ],
-  "rootChildren": [
-    {
-      "type": "route",
-      "uuid": "f76be849-183d-4789-843c-30a0553824bc"
-    }
-  ],
+  "routes": [],
+  "rootChildren": [],
   "proxyMode": true,
   "proxyHost": "http://127.0.0.1:8001",
   "proxyRemovePrefix": false,

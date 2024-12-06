@@ -1,7 +1,7 @@
 meta {
   name: Delete Fiscal Account
   type: http
-  seq: 10
+  seq: 11
 }
 
 delete {
@@ -11,9 +11,14 @@ delete {
 }
 
 vars:pre-request {
-  accountId: {{REQ_ACCOUNT_ID}}
+  accountId: {{TEST_ACCOUNT_ID}}
 }
 
 assert {
   res.status: eq 204
+}
+
+docs {
+  Deletes an existing fiscal account using its UUID.
+  Expects a 204 status code on successful deletion.
 }

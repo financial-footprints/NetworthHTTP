@@ -1,7 +1,7 @@
 meta {
   name: Patch Fiscal Account (Type)
   type: http
-  seq: 7
+  seq: 8
 }
 
 patch {
@@ -17,11 +17,15 @@ body:json {
 }
 
 vars:pre-request {
-  accountId: {{REQ_ACCOUNT_ID}}
+  accountId: {{TEST_ACCOUNT_ID}}
 }
 
 assert {
   res.status: eq 200
   res.body.type: eq CreditCard
   res.body.account_number: eq "123456789"
+}
+
+docs {
+  Updates only the account type of an existing fiscal account.
 }

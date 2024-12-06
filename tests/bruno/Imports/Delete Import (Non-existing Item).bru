@@ -1,0 +1,24 @@
+meta {
+  name: Delete Import (Non-existing Item)
+  type: http
+  seq: 16
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/import/{{importId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  importId: 00000000-0000-0000-0000-000000000000
+}
+
+assert {
+  res.status: eq 404
+}
+
+docs {
+  Tests deletion of a non-existent import using a zero UUID.
+  Expects a 404 status code when the import is not found.
+}

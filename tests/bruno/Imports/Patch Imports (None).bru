@@ -1,0 +1,28 @@
+meta {
+  name: Patch Imports (None)
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{BASEURL}}/api/v1/import/{{importId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.account_number: eq "12345678910"
+}
+
+docs {
+  Tests behavior when updating an import with empty JSON payload.
+}

@@ -18,3 +18,8 @@ assert {
   res.status: eq 404
   res.body: eq error.fiscal_accounts.get_account.not_found
 }
+
+docs {
+  Tests retrieval of a non-existent fiscal account using a zero UUID.
+  Expects a 404 status code when the account is not found.
+}
