@@ -4,6 +4,7 @@ use axum::{
     http::StatusCode,
     Json,
 };
+use sea_orm::DbErr;
 use serde::Deserialize;
 use uuid::Uuid;
 
@@ -22,8 +23,14 @@ pub(super) async fn approve_import(
     {
         Ok(_) => Ok(StatusCode::OK),
         Err(error) => {
+            if matches!(error, DbErr::RecordNotFound(_)) {
+                return Err((
+                    StatusCode::BAD_REQUEST,
+                    "error.import.account_not_found".to_string(),
+                ));
+            }
+
             let now = chrono::Utc::now();
-            println!("error: {:?}", error);
             tracing::error!(
                 "error.import.could_not_approve at {}, error: {}",
                 now,

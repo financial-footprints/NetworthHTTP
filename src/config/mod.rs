@@ -16,8 +16,14 @@ pub(crate) async fn get_config() -> types::Config {
     let database_url =
         env::var("DATABASE_URL").expect("error.config.get_config.database_url_not_found");
 
+    let default_page_limit = env::var("DEFAULT_PAGE_LIMIT")
+        .unwrap_or_else(|_| "50".to_string())
+        .parse()
+        .expect("error.config.get_config.invalid_default_page_limit");
+
     return types::Config {
         db: get_database_connection(&database_url).await,
+        default_page_limit: default_page_limit,
     };
 }
 

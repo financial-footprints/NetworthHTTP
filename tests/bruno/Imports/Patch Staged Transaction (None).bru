@@ -1,0 +1,37 @@
+meta {
+  name: Patch Staged Transaction (None)
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions/{{transactionId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+  transactionId: {{TEST_STAGING_TRANSACTION_ID}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{TEST_STAGING_TRANSACTION_ID}}
+  res.body.import_id: eq {{TEST_IMPORT_ID}}
+  res.body.date: eq "0023-04-01T00:00:00"
+  res.body.amount: eq "-50000"
+  res.body.balance: eq "50000"
+  res.body.ref_no: eq "0000001123"
+  res.body.description: eq "Test1"
+  res.body.sequence_number: eq 1
+}
+
+docs {
+  Retrieves a specific transaction by its UUID within an import.
+  Expects a 200 status code and transaction details on success.
+}

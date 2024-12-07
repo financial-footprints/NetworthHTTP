@@ -28,19 +28,19 @@ pub(super) async fn patch_import(
                         StatusCode::NOT_FOUND,
                         "error.imports.patch_import.not_found".to_string(),
                     );
-                } else {
-                    let now = chrono::Utc::now();
-                    tracing::error!(
-                        "error.imports.patch_import.could_not_update at {}, error: {}",
-                        now,
-                        error
-                    );
-                    println!("error: {:?}", error);
-                    (
-                        StatusCode::INTERNAL_SERVER_ERROR,
-                        "error.imports.patch_import.could_not_update".to_string(),
-                    )
                 }
+
+                let now = chrono::Utc::now();
+                tracing::error!(
+                    "error.imports.patch_import.could_not_update at {}, error: {}",
+                    now,
+                    error
+                );
+                println!("error: {:?}", error);
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "error.imports.patch_import.could_not_update".to_string(),
+                )
             })?;
 
     Ok(Json(import))

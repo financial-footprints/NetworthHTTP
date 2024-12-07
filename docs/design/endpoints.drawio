@@ -13,14 +13,14 @@
         <mxCell id="iOSRRkHD-fxjfYmqYRO--2" value="&lt;div align=&quot;left&quot;&gt;GET api/v1/fiscal_account&lt;br&gt;POST(create) api/v1/fiscal_account/&lt;br&gt;PATCH api/v1/fiscal_account/{id}&lt;br&gt;DELETE api/v1/fiscal_account&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="50" y="490" width="220" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="iOSRRkHD-fxjfYmqYRO--5" value="GET api/v1/statements/import&lt;br&gt;&lt;div align=&quot;left&quot;&gt;GET api/v1/statements/import/{id}/&lt;br&gt;POST(Create) api/v1/statements/import/{id}/&lt;br&gt;POST(Approve) api/v1/statements/import/{id}/&lt;/div&gt;DELETE api/v1/statements/import/{id}/" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="50" y="570" width="300" height="80" as="geometry" />
+        <mxCell id="iOSRRkHD-fxjfYmqYRO--5" value="GET api/v1/import&lt;br&gt;&lt;div align=&quot;left&quot;&gt;GET api/v1/import/{id}/&lt;br&gt;POST(Create) api/v1/import/{id}/&lt;br&gt;POST(Approve) api/v1/import/{id}/&lt;br&gt;PATCH api/v1/import/{id}&lt;br&gt;&lt;/div&gt;DELETE api/v1/import/{id}/" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="50" y="565" width="300" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="iOSRRkHD-fxjfYmqYRO--7" value="&lt;div align=&quot;left&quot;&gt;GET api/v1/statements/import/{id}/transaction/{id}&lt;br&gt;&lt;/div&gt;PATCH api/v1/statements/import/{id}/{id}/transaction/{id}&lt;br&gt;DELETE api/v1/statements/import/{id}/{id}/transaction/{id}" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="50" y="660" width="330" height="50" as="geometry" />
+        <mxCell id="iOSRRkHD-fxjfYmqYRO--7" value="&lt;div align=&quot;left&quot;&gt;GET api/v1/import/{id}/transaction/{id}&lt;br&gt;&lt;/div&gt;PATCH api/v1/import/{id}/transaction/{id}&lt;br&gt;DELETE api/v1/import/{id}/transaction/{id}" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="50" y="666" width="330" height="50" as="geometry" />
         </mxCell>
         <mxCell id="iOSRRkHD-fxjfYmqYRO--8" value="&lt;div align=&quot;left&quot;&gt;GET api/v1/transactions/&lt;/div&gt;GET api/v1/transactions/{id}&lt;br&gt;POST(create) api/v1/transactions/{id}&lt;br&gt;PATCH api/v1/transactions/{id}&lt;div&gt;DELETE api/v1/transcations/{id}&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="50" y="720" width="330" height="80" as="geometry" />
+          <mxGeometry x="50" y="723" width="330" height="80" as="geometry" />
         </mxCell>
         <mxCell id="iOSRRkHD-fxjfYmqYRO--11" value="User Interactions" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="360" y="490" width="100" height="30" as="geometry" />

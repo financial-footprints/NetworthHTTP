@@ -15,17 +15,17 @@ pub async fn delete_import(
             let now = chrono::Utc::now();
             if matches!(error, DbErr::RecordNotFound(_)) {
                 return (StatusCode::NOT_FOUND, error.to_string());
-            } else {
-                tracing::error!(
-                    "error.imports.delete_import.could_not_delete at {}, error: {}",
-                    now,
-                    error
-                );
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    "error.imports.delete_import.could_not_delete".to_string(),
-                );
             }
+
+            tracing::error!(
+                "error.imports.delete_import.could_not_delete at {}, error: {}",
+                now,
+                error
+            );
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "error.imports.delete_import.could_not_delete".to_string(),
+            );
         })
         .map(|_| StatusCode::NO_CONTENT);
 
