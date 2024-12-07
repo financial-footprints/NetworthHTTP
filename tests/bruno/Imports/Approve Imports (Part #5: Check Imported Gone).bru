@@ -1,0 +1,24 @@
+meta {
+  name: Approve Imports (Part #5: Check Imported Gone)
+  type: http
+  seq: 23
+}
+
+get {
+  url: {{BASEURL}}/api/v1/import/{{importId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+}
+
+assert {
+  res.status: eq 404
+  res.body: eq error.import.not_found
+}
+
+docs {
+  Check if the import was successful and the transactions are deleted after approval.
+}

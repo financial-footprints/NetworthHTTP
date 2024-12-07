@@ -1,13 +1,17 @@
 meta {
   name: TODO Approve Imports (Part #4: Check Transactions)
   type: http
-  seq: 13
+  seq: 22
 }
 
 options {
   url: {{BASEURL}}/api/v1/transactions/
   body: none
   auth: none
+}
+
+assert {
+  res.status: eq 200
 }
 
 docs {

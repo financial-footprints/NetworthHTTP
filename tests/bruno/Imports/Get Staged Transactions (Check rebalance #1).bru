@@ -1,0 +1,39 @@
+meta {
+  name: Get Staged Transactions (Check rebalance #1)
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("response should contain rebalanced transactions", () => {
+    expect(res.body).to.be.an('array').with.lengthOf(2);
+  
+    const transaction1 = res.body[0];
+    const transaction2 = res.body[1];
+  
+    expect(transaction1).to.have.property('amount').that.equals('5000');
+    expect(transaction1).to.have.property('balance').that.equals('55000');
+    expect(transaction1).to.have.property('sequence_number').that.equals(2);
+    expect(transaction2).to.have.property('amount').that.equals('-40000');
+    expect(transaction2).to.have.property('balance').that.equals('15000');
+    expect(transaction2).to.have.property('sequence_number').that.equals(3);
+  });
+}
+
+docs {
+  Retrives all transactions for the import. (With limit and offset)
+}

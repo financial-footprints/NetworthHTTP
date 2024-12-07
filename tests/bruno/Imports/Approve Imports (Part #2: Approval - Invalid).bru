@@ -1,7 +1,7 @@
 meta {
   name: Approve Imports (Part #2: Approval - Invalid)
   type: http
-  seq: 10
+  seq: 19
 }
 
 post {
@@ -15,8 +15,8 @@ body:json {
 }
 
 assert {
-  res.status: eq 500
-  res.body: eq error.import.could_not_approve
+  res.status: eq 400
+  res.body: eq error.import.account_not_found
 }
 
 docs {

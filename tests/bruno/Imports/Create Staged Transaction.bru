@@ -1,0 +1,43 @@
+meta {
+  name: Create Staged Transaction
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "date": "0023-04-01T00:00:00",
+    "amount": -25000,
+    "balance": 5000,
+    "ref_no": "0000001123",
+    "description": "Test1",
+    "sequence_number": 1
+  }
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+  transactionId: {{TEST_STAGING_TRANSACTION_ID}}
+}
+
+assert {
+  res.status: eq 201
+}
+
+script:post-response {
+  if (res.status == 201) {
+    bru.setEnvVar("TEST_STAGING_TRANSACTION_ID", res.body);
+  }
+  // bru.setNextRequest(null)
+}
+
+docs {
+  Retrieves a specific transaction by its UUID within an import.
+  Expects a 200 status code and transaction details on success.
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Delete Staged Transaction
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions/{{transactionId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+  transactionId: {{TEST_STAGING_TRANSACTION_ID}}
+}
+
+assert {
+  res.status: eq 204
+}
+
+docs {
+  Retrieves a specific transaction by its UUID within an import.
+  Expects a 200 status code and transaction details on success.
+}
