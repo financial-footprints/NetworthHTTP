@@ -6,14 +6,13 @@ use axum::{
 };
 use chrono::NaiveDateTime;
 use networth_db::models::entities::staged_transactions;
-use sea_orm::prelude::Decimal;
 use serde::Deserialize;
 use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct UpdateTransactionDetails {
     date: Option<NaiveDateTime>,
-    amount: Option<Decimal>,
+    amount: Option<f32>,
     ref_no: Option<String>,
     description: Option<String>,
     sequence_number: Option<i64>,

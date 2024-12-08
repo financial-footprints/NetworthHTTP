@@ -1,13 +1,13 @@
 use crate::config::types::Config;
 use axum::{extract::State, http::StatusCode, Json};
-use sea_orm::{prelude::Decimal, sqlx};
+use sea_orm::sqlx;
 use serde::Deserialize;
 use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct CreateTransactionDetails {
     pub description: String,
-    pub amount: Decimal,
+    pub amount: f32,
     pub account_id: Uuid,
     pub date: chrono::NaiveDateTime,
     pub sequence_number: i64,

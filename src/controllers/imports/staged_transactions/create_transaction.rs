@@ -5,16 +5,16 @@ use axum::{
     Json,
 };
 use chrono::NaiveDateTime;
-use sea_orm::{prelude::Decimal, sqlx};
+use sea_orm::sqlx;
 use serde::Deserialize;
 use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct CreateTransactionDetails {
     pub description: String,
-    pub amount: Decimal,
+    pub amount: f32,
     pub date: NaiveDateTime,
-    pub balance: Decimal,
+    pub balance: f32,
     pub sequence_number: i64,
     pub ref_no: String,
 }

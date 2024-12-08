@@ -38,18 +38,18 @@ tests {
   
     expect(transaction1).to.have.property('id').that.matches(uuidRegex);
     expect(transaction1).to.have.property('import_id').that.equals(bru.getEnvVar("TEST_IMPORT_ID"));
-    expect(transaction1).to.have.property('amount').that.equals('5000');
+    expect(transaction1).to.have.property('amount').that.equals(5000);
     expect(transaction1).to.have.property('date').that.equals('0024-04-01T00:00:00');
-    expect(transaction1).to.have.property('balance').that.equals('55000');
+    expect(transaction1).to.have.property('balance').that.equals(55000);
     expect(transaction1).to.have.property('ref_no').that.equals('000000000000000');
     expect(transaction1).to.have.property('description').that.equals('Test2');
     expect(transaction1).to.have.property('sequence_number').that.equals(2);
   
     expect(transaction2).to.have.property('id').that.matches(uuidRegex);
     expect(transaction2).to.have.property('import_id').that.equals(bru.getEnvVar("TEST_IMPORT_ID"));
-    expect(transaction2).to.have.property('amount').that.equals('-50000');
+    expect(transaction2).to.have.property('amount').that.equals(-50000);
     expect(transaction2).to.have.property('date').that.equals('0023-04-01T00:00:00');
-    expect(transaction2).to.have.property('balance').that.equals('50000');
+    expect(transaction2).to.have.property('balance').that.equals(50000);
     expect(transaction2).to.have.property('ref_no').that.equals('0000001123');
     expect(transaction2).to.have.property('description').that.equals('Test1');
     expect(transaction2).to.have.property('sequence_number').that.equals(1);

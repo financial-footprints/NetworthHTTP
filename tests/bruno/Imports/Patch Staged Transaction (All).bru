@@ -31,8 +31,8 @@ assert {
   res.body.id: eq {{TEST_STAGING_TRANSACTION_ID}}
   res.body.import_id: eq {{TEST_IMPORT_ID}}
   res.body.date: eq "0024-04-01T00:00:00"
-  res.body.amount: eq "-40000"
-  res.body.balance: eq "65000"
+  res.body.amount: eq -40000
+  res.body.balance: eq 65000
   res.body.ref_no: eq "0000001124"
   res.body.description: eq "Test2"
   res.body.sequence_number: eq 3
