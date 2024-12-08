@@ -11,7 +11,7 @@ use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct UpdateImportDetails {
-    pub account_number: Option<String>,
+    pub account_id: Option<Uuid>,
 }
 
 pub(super) async fn patch_import(
@@ -20,7 +20,7 @@ pub(super) async fn patch_import(
     Json(payload): Json<UpdateImportDetails>,
 ) -> Result<Json<imports::Model>, (StatusCode, String)> {
     let import =
-        networth_db::models::manage::imports::update_import(&config.db, id, payload.account_number)
+        networth_db::models::manage::imports::update_import(&config.db, id, payload.account_id)
             .await
             .map_err(|error| {
                 if matches!(error, DbErr::RecordNotFound(_)) {

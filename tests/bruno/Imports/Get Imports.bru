@@ -1,7 +1,7 @@
 meta {
   name: Get Imports
   type: http
-  seq: 3
+  seq: 6
 }
 
 post {
@@ -31,7 +31,7 @@ tests {
     const importRecord = res.body.find(record => record.id === importId);
     console.log(importRecord)
     expect(importRecord).to.not.be.undefined;
-    expect(importRecord).to.have.property('account_number', '12345678910');
+    expect(importRecord).to.have.property('account_id', bru.getEnvVar('TEST_ACCOUNT_ID'));
     expect(importRecord).to.have.property('source_file_date', '2024-03-31T00:00:00');
   });
 }

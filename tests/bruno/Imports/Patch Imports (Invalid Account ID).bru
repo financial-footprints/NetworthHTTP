@@ -1,7 +1,7 @@
 meta {
-  name: Patch Imports (Account Number)
+  name: Patch Imports (Invalid Account ID)
   type: http
-  seq: 17
+  seq: 20
 }
 
 patch {
@@ -12,7 +12,7 @@ patch {
 
 body:json {
   {
-    "account_number": "import_test_number"
+    "account_id": "00000000-0000-0000-0000-000000000000"
   }
 }
 
@@ -21,8 +21,8 @@ vars:pre-request {
 }
 
 assert {
-  res.status: eq 200
-  res.body.account_number: eq import_test_number
+  res.status: eq 404
+  res.body: eq error.imports.patch_import.not_found
 }
 
 docs {

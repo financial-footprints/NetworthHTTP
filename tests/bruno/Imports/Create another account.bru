@@ -1,7 +1,7 @@
 meta {
-  name: Approve Imports (Part #1: Create an account)
+  name: Create another account
   type: http
-  seq: 18
+  seq: 21
 }
 
 post {
@@ -25,6 +25,7 @@ tests {
   test("response is a valid uuid", () => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     expect(uuidRegex.test(res.body)).to.be.true;
+    bru.setEnvVar("TEST_OLD_ACCOUNT_ID", bru.getEnvVar("TEST_ACCOUNT_ID"));  
     bru.setEnvVar("TEST_ACCOUNT_ID", res.body);
   });
 }
