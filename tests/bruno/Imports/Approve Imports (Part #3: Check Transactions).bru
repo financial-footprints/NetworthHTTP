@@ -1,7 +1,7 @@
 meta {
-  name: Approve Imports (Part #4: Check Transactions)
+  name: Approve Imports (Part #3: Check Transactions)
   type: http
-  seq: 22
+  seq: 27
 }
 
 post {
@@ -25,19 +25,19 @@ assert {
 tests {
   test("response should contain correct transaction data", () => {
     expect(res.body).to.be.an('array').with.lengthOf(2);
-
+  
     const transaction1 = res.body[0];
     const transaction2 = res.body[1];
-
+  
     // UUID pattern check
     const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
     expect(transaction1.id).to.match(uuidPattern);
     expect(transaction2.id).to.match(uuidPattern);
-
+  
     // Account ID check
     expect(transaction1.account_id).to.equal(bru.getEnvVar("TEST_ACCOUNT_ID"));
     expect(transaction2.account_id).to.equal(bru.getEnvVar("TEST_ACCOUNT_ID"));
-
+  
     // Transaction 1 checks
     expect(transaction1).to.include({
       amount: 5000,
@@ -47,7 +47,7 @@ tests {
       ref_no: "000000000000000",
       sequence_number: 2
     });
-
+  
     // Transaction 2 checks
     expect(transaction2).to.include({
       amount: -25000,

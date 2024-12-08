@@ -1,7 +1,7 @@
 meta {
   name: Get Import By ID
   type: http
-  seq: 5
+  seq: 8
 }
 
 get {
@@ -21,7 +21,7 @@ assert {
 
 tests {
   test("response should contain correct import details", () => {
-    expect(res.body).to.have.property('account_number', '12345678910');
+    expect(res.body).to.have.property('account_id', bru.getEnvVar('TEST_ACCOUNT_ID'));
     expect(res.body).to.have.property('source_file_date', '2024-03-31T00:00:00');
   });
 }

@@ -1,17 +1,23 @@
 meta {
-  name: Patch Imports (None)
+  name: Patch Imports (Account ID)
   type: http
-  seq: 19
+  seq: 22
 }
 
 patch {
-  url: {{BASEURL}}/api/v1/import/{{TEST_IMPORT_ID}}
+  url: {{BASEURL}}/api/v1/import/{{importId}}
   body: json
   auth: none
 }
 
 body:json {
-  {}
+  {
+    "account_id": "{{TEST_ACCOUNT_ID}}"
+  }
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
 }
 
 assert {

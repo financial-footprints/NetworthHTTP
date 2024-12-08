@@ -1,0 +1,35 @@
+meta {
+  name: Create an account
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/create
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "account_number": "import_test_number",
+    "type": "SavingsAccount"
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+tests {
+  test("response is a valid uuid", () => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    expect(uuidRegex.test(res.body)).to.be.true;
+    bru.setEnvVar("TEST_ACCOUNT_ID", res.body);
+  });
+}
+
+docs {
+  Creates a new fiscal account with the specified account number and type.
+  Expects a 201 status code and returns the new account's UUID.
+}
