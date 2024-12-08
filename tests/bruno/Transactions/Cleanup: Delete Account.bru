@@ -1,0 +1,20 @@
+meta {
+  name: Cleanup: Delete Account
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/fiscal_accounts/{{TEST_ACCOUNT_ID}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 204
+}
+
+docs {
+  Deletes an existing fiscal account using its UUID.
+  Expects a 204 status code on successful deletion.
+}

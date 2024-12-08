@@ -5,13 +5,14 @@ use axum::{
     Json,
 };
 use chrono::NaiveDateTime;
-use networth_db::models::entities::staged_transactions;
+use networth_db::models::entities::transactions;
 use sea_orm::prelude::Decimal;
 use serde::Deserialize;
 use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct UpdateTransactionDetails {
+    account_id: Option<Uuid>,
     date: Option<NaiveDateTime>,
     amount: Option<Decimal>,
     ref_no: Option<String>,
@@ -21,14 +22,15 @@ pub struct UpdateTransactionDetails {
 
 pub async fn patch_transaction(
     State(config): State<Config>,
-    Path((_, transaction_id)): Path<(Uuid, Uuid)>,
+    Path(transaction_id): Path<Uuid>,
     Json(payload): Json<UpdateTransactionDetails>,
-) -> Result<Json<staged_transactions::Model>, (StatusCode, String)> {
-    let transaction = networth_db::models::manage::staged_transactions::update_staged_transaction(
+) -> Result<Json<transactions::Model>, (StatusCode, String)> {
+    let transaction = networth_db::models::manage::transactions::update_transaction(
         &config.db,
         transaction_id,
-        payload.date,
+        payload.account_id,
         payload.amount,
+        payload.date,
         payload.ref_no,
         payload.description,
         payload.sequence_number,
@@ -37,13 +39,13 @@ pub async fn patch_transaction(
     .map_err(|error| {
         let now = chrono::Utc::now();
         tracing::error!(
-            "error.staged_transactions.could_not_update at {}, error: {}",
+            "error.transaction.could_not_update at {}, error: {}",
             now,
             error
         );
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            "error.staged_transactions.could_not_update".to_string(),
+            "error.transaction.could_not_update".to_string(),
         )
     })?;
 

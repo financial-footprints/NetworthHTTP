@@ -17,6 +17,8 @@ vars:pre-request {
 assert {
   res.status: eq 200
   res.body.id: eq {{TEST_ACCOUNT_ID}}
+  res.body.account_number: eq '123456789'
+  res.body.type: eq CheckingAccount
 }
 
 docs {

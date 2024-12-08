@@ -1,11 +1,11 @@
 meta {
-  name: Patch Staged Transaction (All)
+  name: Patch Transaction (All)
   type: http
-  seq: 8
+  seq: 5
 }
 
 patch {
-  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions/{{transactionId}}
+  url: {{BASEURL}}/api/v1/transactions/{{TEST_TRANSACTION_ID}}
   body: json
   auth: none
 }
@@ -15,24 +15,20 @@ body:json {
     "date": "0024-04-01T00:00:00",
     "amount": -40000,
     "balance": 40000,
+    "account_id": "{{TEST_ACCOUNT_ID}}",
     "ref_no": "0000001124",
     "description": "Test2",
     "sequence_number": 3
   }
 }
 
-vars:pre-request {
-  importId: {{TEST_IMPORT_ID}}
-  transactionId: {{TEST_STAGING_TRANSACTION_ID}}
-}
-
 assert {
   res.status: eq 200
-  res.body.id: eq {{TEST_STAGING_TRANSACTION_ID}}
-  res.body.import_id: eq {{TEST_IMPORT_ID}}
+  res.body.id: eq {{TEST_TRANSACTION_ID}}
+  res.body.account_id: eq {{TEST_ACCOUNT_ID}}
   res.body.date: eq "0024-04-01T00:00:00"
   res.body.amount: eq "-40000"
-  res.body.balance: eq "65000"
+  res.body.balance: eq "-40000"
   res.body.ref_no: eq "0000001124"
   res.body.description: eq "Test2"
   res.body.sequence_number: eq 3

@@ -1,0 +1,32 @@
+meta {
+  name: Patch Transaction (None)
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{BASEURL}}/api/v1/transactions/{{TEST_TRANSACTION_ID}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{TEST_TRANSACTION_ID}}
+  res.body.account_id: eq {{TEST_ACCOUNT_ID}}
+  res.body.date: eq "0023-04-01T00:00:00"
+  res.body.amount: eq "-25000"
+  res.body.balance: eq "-25000"
+  res.body.ref_no: eq "0000001123"
+  res.body.description: eq "Test1"
+  res.body.sequence_number: eq 1
+}
+
+docs {
+  Retrieves a specific transaction by its UUID within an import.
+  Expects a 200 status code and transaction details on success.
+}

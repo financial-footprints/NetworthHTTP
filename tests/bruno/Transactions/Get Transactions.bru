@@ -1,0 +1,47 @@
+meta {
+  name: Get Transactions
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{BASEURL}}/api/v1/transactions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "filter": {
+      "account_id": "{{TEST_ACCOUNT_ID}}"
+    }
+  }
+}
+
+vars:pre-request {
+  importId: {{TEST_IMPORT_ID}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("response should contain rebalanced transactions", () => {
+    expect(res.body).to.be.an('array').with.lengthOf(1);
+  
+    const transaction = res.body[0];
+  
+    expect(transaction).to.have.property('date').that.equals('0024-04-01T00:00:00');
+    expect(transaction).to.have.property('amount').that.equals('-40000');
+    expect(transaction).to.have.property('balance').that.equals('-40000');
+    expect(transaction).to.have.property('account_id').that.equals(bru.getEnvVar('TEST_ACCOUNT_ID'));
+    expect(transaction).to.have.property('ref_no').that.equals('0000001124');
+    expect(transaction).to.have.property('description').that.equals('Test2');
+    expect(transaction).to.have.property('sequence_number').that.equals(3);
+  });
+}
+
+docs {
+  Retrives all transactions for the import. (With limit and offset)
+}

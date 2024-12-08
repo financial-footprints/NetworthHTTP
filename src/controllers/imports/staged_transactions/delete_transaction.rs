@@ -17,13 +17,13 @@ pub async fn delete_transaction(
     .map_err(|error| {
         let now = chrono::Utc::now();
         tracing::error!(
-            "error.transaction.could_not_delete at {}, error: {}",
+            "error.staged_transactions.could_not_delete at {}, error: {}",
             now,
             error
         );
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            "error.transaction.could_not_delete".to_string(),
+            "error.staged_transactions.could_not_delete".to_string(),
         )
     })?;
 

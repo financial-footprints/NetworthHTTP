@@ -32,7 +32,6 @@ pub async fn create_account(
                 now,
                 err
             );
-            println!("{}: {:?}", now, err);
             Err((
                 StatusCode::INTERNAL_SERVER_ERROR,
                 "error.fiscal_accounts.create_account.could_not_save".to_string(),

@@ -4,10 +4,19 @@ meta {
   seq: 3
 }
 
-get {
+post {
   url: {{BASEURL}}/api/v1/import
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "sort": {
+      "column": "import_date",
+      "direction": "desc"
+    }
+  }
 }
 
 assert {

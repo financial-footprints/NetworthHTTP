@@ -1,11 +1,11 @@
 meta {
-  name: Create Staged Transaction
+  name: Create Transaction
   type: http
-  seq: 12
+  seq: 2
 }
 
 post {
-  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions/create
+  url: {{BASEURL}}/api/v1/transactions/create
   body: json
   auth: none
 }
@@ -13,17 +13,12 @@ post {
 body:json {
   {
     "date": "0023-04-01T00:00:00",
+    "account_id": "{{TEST_ACCOUNT_ID}}",
     "amount": -25000,
-    "balance": 5000,
     "ref_no": "0000001123",
     "description": "Test1",
     "sequence_number": 1
   }
-}
-
-vars:pre-request {
-  importId: {{TEST_IMPORT_ID}}
-  transactionId: {{TEST_STAGING_TRANSACTION_ID}}
 }
 
 assert {
@@ -32,9 +27,8 @@ assert {
 
 script:post-response {
   if (res.status == 201) {
-    bru.setEnvVar("TEST_STAGING_TRANSACTION_ID", res.body);
+    bru.setEnvVar("TEST_TRANSACTION_ID", res.body);
   }
-  // bru.setNextRequest(null)
 }
 
 docs {

@@ -4,10 +4,18 @@ meta {
   seq: 13
 }
 
-get {
+post {
   url: {{BASEURL}}/api/v1/import/{{importId}}/transactions
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "filter": {
+      "import_id": "{{TEST_IMPORT_ID}}"
+    }
+  }
 }
 
 vars:pre-request {
@@ -22,8 +30,8 @@ tests {
   test("response should contain rebalanced transactions", () => {
     expect(res.body).to.be.an('array').with.lengthOf(2);
   
-    const transaction1 = res.body[0];
-    const transaction2 = res.body[1];
+    const transaction1 = res.body[1];
+    const transaction2 = res.body[0];
   
     expect(transaction1).to.have.property('amount').that.equals('-25000');
     expect(transaction1).to.have.property('sequence_number').that.equals(1);

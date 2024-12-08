@@ -4,10 +4,19 @@ meta {
   seq: 3
 }
 
-get {
+post {
   url: {{BASEURL}}/api/v1/fiscal_accounts
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "sort": {
+      "column": "updated_at",
+      "direction": "desc"
+    }
+  }
 }
 
 assert {
@@ -17,11 +26,11 @@ assert {
 tests {
   test("response should be a valid array", () => {
     expect(res.body).to.be.an('array');
-
+  
     const accountId = bru.getEnvVar("TEST_ACCOUNT_ID");
     const accountRecord = res.body.find(record => record.id === accountId);
     expect(accountRecord).to.not.be.undefined;
-
+  
     const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
     expect(accountRecord).to.have.property('updated_at').that.matches(iso8601Regex);
     expect(accountRecord).to.have.property('account_number', '123456789');

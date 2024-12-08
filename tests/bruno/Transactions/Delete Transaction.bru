@@ -1,0 +1,20 @@
+meta {
+  name: Delete Transaction
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{BASEURL}}/api/v1/transactions/{{TEST_TRANSACTION_ID}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 204
+}
+
+docs {
+  Retrieves a specific transaction by its UUID within an import.
+  Expects a 200 status code and transaction details on success.
+}

@@ -14,18 +14,21 @@ pub async fn delete_account(
         .map_err(|error| {
             let now = chrono::Utc::now();
             if matches!(error, DbErr::RecordNotFound(_)) {
-                return (StatusCode::NOT_FOUND, error.to_string());
-            } else {
-                tracing::error!(
-                    "error.fiscal_accounts.delete_account.could_not_delete at {}, error: {}",
-                    now,
-                    error
-                );
                 return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    "error.fiscal_accounts.delete_account.could_not_delete".to_string(),
+                    StatusCode::BAD_REQUEST,
+                    "user.input.incorrect_account_id".to_string(),
                 );
             }
+
+            tracing::error!(
+                "error.fiscal_accounts.delete_account.could_not_delete at {}, error: {}",
+                now,
+                error
+            );
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                "error.fiscal_accounts.delete_account.could_not_delete".to_string(),
+            );
         })
         .map(|_| StatusCode::NO_CONTENT);
 

@@ -4,6 +4,7 @@ use axum::{
     http::StatusCode,
     Json,
 };
+use chrono::NaiveDateTime;
 use sea_orm::{prelude::Decimal, sqlx};
 use serde::Deserialize;
 use uuid::Uuid;
@@ -12,7 +13,7 @@ use uuid::Uuid;
 pub struct CreateTransactionDetails {
     pub description: String,
     pub amount: Decimal,
-    pub date: chrono::NaiveDateTime,
+    pub date: NaiveDateTime,
     pub balance: Decimal,
     pub sequence_number: i64,
     pub ref_no: String,
@@ -39,16 +40,15 @@ pub async fn create_transaction(
     )
     .await
     .map_err(|error| {
-        println!("error: {:?}", error);
         if let sea_orm::DbErr::Exec(sea_orm::RuntimeErr::SqlxError(sqlx::Error::Database(
             db_error,
         ))) = &error
         {
             if let Some(constraint) = db_error.constraint() {
-                if constraint == "uniq_stagingid_sequencenumber" {
+                if constraint == "uniq_importid_sequencenumber" {
                     return (
                         StatusCode::BAD_REQUEST,
-                        "error.transactions.duplicate_sequence_number".to_string(),
+                        "error.staged_transactions.duplicate_sequence_number".to_string(),
                     );
                 }
             }
@@ -56,13 +56,13 @@ pub async fn create_transaction(
 
         let now = chrono::Utc::now();
         tracing::error!(
-            "error.transactions.could_not_create at {}, error: {}",
+            "error.staged_transactions.could_not_create at {}, error: {}",
             now,
             error
         );
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            "error.transactions.could_not_create".to_string(),
+            "error.staged_transactions.could_not_create".to_string(),
         )
     })?;
 

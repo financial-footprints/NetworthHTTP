@@ -36,7 +36,6 @@ pub(super) async fn patch_import(
                     now,
                     error
                 );
-                println!("error: {:?}", error);
                 (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     "error.imports.patch_import.could_not_update".to_string(),

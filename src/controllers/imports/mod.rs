@@ -13,8 +13,8 @@ use axum::{
 
 pub(super) fn routes(config: crate::config::types::Config) -> Router {
     Router::new()
-        .route("/", get(get_imports::get_imports))
-        .route("/", post(create_import::create_import))
+        .route("/", post(get_imports::get_imports))
+        .route("/create", post(create_import::create_import))
         .route("/:id", get(get_import::get_import))
         .route("/:id", patch(patch_import::patch_import))
         .route("/:id", post(approve_import::approve_import))
