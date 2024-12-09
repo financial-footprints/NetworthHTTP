@@ -21,9 +21,12 @@ pub(crate) async fn get_config() -> types::Config {
         .parse()
         .expect("error.config.get_config.invalid_default_page_limit");
 
+    let cors_allowed_origins = env::var("CORS_ALLOWED_ORIGINS").unwrap_or_else(|_| "".to_string());
+
     return types::Config {
         db: get_database_connection(&database_url).await,
-        default_page_limit: default_page_limit,
+        default_page_limit,
+        cors_allowed_origins,
     };
 }
 
