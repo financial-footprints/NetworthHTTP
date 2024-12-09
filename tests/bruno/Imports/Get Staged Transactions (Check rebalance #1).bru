@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions
+  url: {{BASEURL}}/api/v1/import/{{TEST_IMPORT_ID}}/transactions
   body: json
   auth: none
 }
@@ -14,12 +14,9 @@ body:json {
   {
     "filter": {
       "import_id": "{{TEST_IMPORT_ID}}"
-    }
+    },
+    "sort": {}
   }
-}
-
-vars:pre-request {
-  importId: {{TEST_IMPORT_ID}}
 }
 
 assert {
@@ -33,12 +30,12 @@ tests {
     const transaction1 = res.body[0];
     const transaction2 = res.body[1];
   
-    expect(transaction1).to.have.property('amount').that.equals(5000);
-    expect(transaction1).to.have.property('balance').that.equals(105000);
-    expect(transaction1).to.have.property('sequence_number').that.equals(2);
-    expect(transaction2).to.have.property('amount').that.equals(-40000);
-    expect(transaction2).to.have.property('balance').that.equals(65000);
-    expect(transaction2).to.have.property('sequence_number').that.equals(3);
+    expect(transaction1).to.have.property('amount').that.equals(-40000);
+    expect(transaction1).to.have.property('balance').that.equals(65000);
+    expect(transaction1).to.have.property('sequence_number').that.equals(3);
+    expect(transaction2).to.have.property('amount').that.equals(5000);
+    expect(transaction2).to.have.property('balance').that.equals(105000);
+    expect(transaction2).to.have.property('sequence_number').that.equals(2);
   });
 }
 

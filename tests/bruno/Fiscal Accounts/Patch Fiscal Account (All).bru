@@ -1,5 +1,5 @@
 meta {
-  name: Patch Fiscal Account (Both)
+  name: Patch Fiscal Account (All)
   type: http
   seq: 10
 }
@@ -13,7 +13,8 @@ patch {
 body:json {
   {
     "account_number": "12345789",
-    "type": "SavingsAccount"
+    "type": "SavingsAccount",
+    "institution_name": "Icici"
   }
 }
 
@@ -25,6 +26,7 @@ assert {
   res.status: eq 200
   res.body.type: eq SavingsAccount
   res.body.account_number: eq "12345789"
+  res.body.institution_name: eq Icici
 }
 
 docs {

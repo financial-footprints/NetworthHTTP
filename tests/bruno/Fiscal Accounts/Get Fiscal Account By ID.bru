@@ -19,6 +19,8 @@ assert {
   res.body.id: eq {{TEST_ACCOUNT_ID}}
   res.body.account_number: eq '123456789'
   res.body.type: eq CheckingAccount
+  res.body.institution_name: eq Hdfc
+  res.body.balance: eq 0
 }
 
 docs {

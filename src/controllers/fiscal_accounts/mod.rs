@@ -8,6 +8,7 @@ mod delete_account;
 mod get_account;
 mod get_accounts;
 mod patch_account;
+mod types;
 
 pub(super) fn routes(config: crate::config::types::Config) -> Router {
     Router::new()

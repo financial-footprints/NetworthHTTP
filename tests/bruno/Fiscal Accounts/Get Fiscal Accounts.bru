@@ -26,15 +26,17 @@ assert {
 tests {
   test("response should be a valid array", () => {
     expect(res.body).to.be.an('array');
-  
+
     const accountId = bru.getEnvVar("TEST_ACCOUNT_ID");
     const accountRecord = res.body.find(record => record.id === accountId);
     expect(accountRecord).to.not.be.undefined;
-  
+
     const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/;
     expect(accountRecord).to.have.property('updated_at').that.matches(iso8601Regex);
     expect(accountRecord).to.have.property('account_number', '123456789');
     expect(accountRecord).to.have.property('type', 'CheckingAccount');
+    expect(accountRecord).to.have.property('institution_name', 'Hdfc');
+    expect(accountRecord).to.have.property('balance', 0.0);
   });
 }
 

@@ -2,7 +2,7 @@ use axum::{
     extract::{Json, State},
     http::StatusCode,
 };
-use networth_db::models::entities::sea_orm_active_enums::AccountType;
+use networth_db::models::entities::sea_orm_active_enums::{AccountType, InstitutionName};
 use serde::Deserialize;
 use uuid::Uuid;
 
@@ -10,6 +10,7 @@ use uuid::Uuid;
 pub struct CreateAccountRequest {
     pub account_number: String,
     pub r#type: AccountType,
+    pub institution_name: InstitutionName,
 }
 
 pub async fn create_account(
@@ -20,6 +21,7 @@ pub async fn create_account(
         &config.db,
         &payload.account_number,
         &payload.r#type,
+        &payload.institution_name,
     )
     .await;
 

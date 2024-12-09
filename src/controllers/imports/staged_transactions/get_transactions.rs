@@ -10,6 +10,7 @@ pub async fn get_transactions(
     if body.limit.is_none() {
         body.limit = Some(config.default_page_limit);
     }
+
     match networth_db::models::manage::staged_transactions::get_staged_transactions(
         &config.db, body,
     )

@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{BASEURL}}/api/v1/import/{{importId}}/transactions
+  url: {{BASEURL}}/api/v1/import/{{TEST_IMPORT_ID}}/transactions
   body: json
   auth: none
 }
@@ -14,12 +14,9 @@ body:json {
   {
     "filter": {
       "import_id": "{{TEST_IMPORT_ID}}"
-    }
+    },
+    "sort": {}
   }
-}
-
-vars:pre-request {
-  importId: {{TEST_IMPORT_ID}}
 }
 
 assert {

@@ -1,14 +1,19 @@
 use axum::{extract::State, http::StatusCode, Json};
-use networth_db::models::{entities::accounts, helpers::accounts::AccountsQueryOptions};
+use networth_db::models::helpers::accounts::AccountsQueryOptions;
+
+use super::types::AccountResponse;
 
 pub async fn get_accounts(
     State(config): State<crate::config::types::Config>,
     Json(mut body): Json<AccountsQueryOptions>,
-) -> Result<Json<Vec<accounts::Model>>, (StatusCode, String)> {
+) -> Result<Json<Vec<AccountResponse>>, (StatusCode, String)> {
     if body.limit.is_none() {
         body.limit = Some(config.default_page_limit);
     }
-    let accounts = networth_db::models::manage::accounts::get_accounts(&config.db, body)
+    let accounts =
+        networth_db::models::manage::joins::accounts_transactions::get_accounts_with_balance(
+            &config.db, body,
+        )
         .await
         .map_err(|error| {
             let now = chrono::Utc::now();
@@ -23,5 +28,18 @@ pub async fn get_accounts(
             )
         })?;
 
-    Ok(Json(accounts))
+    let response = accounts
+        .into_iter()
+        .map(|(account, balance)| AccountResponse {
+            id: account.id,
+            updated_at: account.updated_at,
+            account_number: account.account_number,
+            max_sequence_number: account.max_sequence_number,
+            transaction_count: account.transaction_count,
+            r#type: account.r#type,
+            institution_name: account.institution_name,
+            balance,
+        })
+        .collect();
+    Ok(Json(response))
 }

@@ -2,7 +2,10 @@ use axum::{
     extract::{Json, Path, State},
     http::StatusCode,
 };
-use networth_db::models::entities::{accounts, sea_orm_active_enums::AccountType};
+use networth_db::models::entities::{
+    accounts,
+    sea_orm_active_enums::{AccountType, InstitutionName},
+};
 use sea_orm::DbErr;
 use serde::Deserialize;
 use uuid::Uuid;
@@ -11,6 +14,7 @@ use uuid::Uuid;
 pub struct UpdateAccountDetails {
     pub account_number: Option<String>,
     pub r#type: Option<AccountType>,
+    pub institution_name: Option<InstitutionName>,
 }
 
 pub async fn patch_account(
@@ -23,6 +27,7 @@ pub async fn patch_account(
         id,
         payload.r#type,
         payload.account_number,
+        payload.institution_name,
     )
     .await
     .map_err(|error| {

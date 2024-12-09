@@ -13,7 +13,8 @@ post {
 body:json {
   {
     "account_number": "import_test_number",
-    "type": "SavingsAccount"
+    "type": "SavingsAccount",
+    "institution_name": "Hdfc"
   }
 }
 
@@ -25,7 +26,7 @@ tests {
   test("response is a valid uuid", () => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     expect(uuidRegex.test(res.body)).to.be.true;
-    bru.setEnvVar("TEST_OLD_ACCOUNT_ID", bru.getEnvVar("TEST_ACCOUNT_ID"));  
+    bru.setEnvVar("TEST_OLD_ACCOUNT_ID", bru.getEnvVar("TEST_ACCOUNT_ID"));
     bru.setEnvVar("TEST_ACCOUNT_ID", res.body);
   });
 }
